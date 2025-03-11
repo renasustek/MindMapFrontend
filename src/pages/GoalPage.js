@@ -6,17 +6,22 @@ import KanbanBoard from "../components/KanbanBoard";
 const GoalPage = () => {
   const { goalId, kanbanBoardId, specificSteps, measureProgress, isGoalRealistic, dueDate, completedDate } = useParams();
   const [kanbanData, setKanbanData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch Kanban Board Data from Backend
+    setLoading(true);
     axios
       .get(`http://localhost:8080/kanbanBoard/get/${kanbanBoardId}`, { withCredentials: true })
       .then((response) => {
         console.log("Kanban Board Data:", response.data);
         setKanbanData(response.data);
+        setLoading(false);
       })
-      .catch((error) => console.error("Failed to fetch Kanban Board data", error));
-  }, [kanbanBoardId]);
+      .catch((error) => {
+        console.error("Failed to fetch Kanban Board data", error);
+        setLoading(false);
+      });
+  }, [kanbanBoardId]); // ✅ This ensures it refetches when the goal changes
 
   return (
     <div className="goal-container">
@@ -29,12 +34,8 @@ const GoalPage = () => {
       <p><strong>Due Date:</strong> {dueDate}</p>
       <p><strong>Completed Date:</strong> {completedDate || "Not Completed Yet"}</p>
 
-      {/* Render Kanban Board if Data is Available */}
-      {kanbanData ? (
-        <KanbanBoard initialTasks={kanbanData} />
-      ) : (
-        <p>Loading Kanban Board...</p>
-      )}
+      {/* Show Kanban Board if data is available */}
+      {loading ? <p>Loading Kanban Board...</p> : <KanbanBoard initialTasks={kanbanData} />}
     </div>
   );
 };

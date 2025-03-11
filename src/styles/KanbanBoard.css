@@ -20,48 +20,35 @@
   }
   
   .kanban-task {
-    background: #ffcc00;
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    color: white;
+    cursor: grab;
+    transition: transform 0.2s ease-in-out;
   }
   
-  .kanban-task:nth-child(odd) {
-    background: #4caf50;
-  }
-  
-  .kanban-task:nth-child(even) {
-    background: #2196f3;
+  .kanban-task:active {
+    cursor: grabbing;
+    transform: scale(1.05);
   }
   
   .task-title {
     font-weight: bold;
+    font-size: 16px;
   }
   
   .task-desc {
     font-size: 14px;
   }
   
-  .task-footer {
-    display: flex;
-    justify-content: space-between;
+  .task-info {
+    font-size: 12px;
     margin-top: 5px;
   }
   
-  .task-label {
-    background: #e91e63;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    color: white;
-  }
-  
-  .task-date {
-    background: red;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    color: white;
+  .task-info p {
+    margin: 3px 0;
   }
   
