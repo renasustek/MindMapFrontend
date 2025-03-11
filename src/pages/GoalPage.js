@@ -21,7 +21,7 @@ const GoalPage = () => {
         console.error("Failed to fetch Kanban Board data", error);
         setLoading(false);
       });
-  }, [kanbanBoardId]); // ✅ This ensures it refetches when the goal changes
+  }, [kanbanBoardId]);
 
   return (
     <div className="goal-container">
@@ -35,7 +35,7 @@ const GoalPage = () => {
       <p><strong>Completed Date:</strong> {completedDate || "Not Completed Yet"}</p>
 
       {/* Show Kanban Board if data is available */}
-      {loading ? <p>Loading Kanban Board...</p> : <KanbanBoard initialTasks={kanbanData} />}
+      {loading ? <p>Loading Kanban Board...</p> : <KanbanBoard kanbanData={kanbanData} />}
     </div>
   );
 };
