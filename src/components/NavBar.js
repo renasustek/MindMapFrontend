@@ -51,20 +51,13 @@ const NavBar = () => {
         </div>
 
         <div className="nav-links">
-          <Link to="/tasks"><FaChartLine /></Link>
+          <Link to="/progressTracker"><FaChartLine /></Link>
           <Link to="/leaderboard"><FaBook /></Link>
-          <FaRedo />
-          <FaRedo />
-          <FaRedo />
-          <FaPlus />
-        </div>
-
-        {/* Goal Buttons */}
-        <div className="goal-buttons">
+          <div className="goal-buttons">
           {goals.length > 0 ? (
             goals.map((goal) => (
               <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
-                {goal.specificSteps}
+                GOAL
               </button>
             ))
           ) : (
@@ -72,6 +65,11 @@ const NavBar = () => {
           )}
         </div>
 
+          <FaPlus />
+        </div>
+
+        {/* Goal Buttons */}
+        
         <div className="user-section">
           <FaUser onClick={() => setShowModal(true)} className="cursor-pointer" title="Login/Register" />
           <FaSignOutAlt

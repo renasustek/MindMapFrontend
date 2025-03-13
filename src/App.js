@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
-import Tasks from "./pages/Tasks";
+import ProgressTracker from "./pages/ProgressTracker";
 import Leaderboard from "./pages/Leaderboard";
 import GoalPage from "./pages/GoalPage";
 import { AuthProvider } from "./context/AuthContext";
@@ -15,7 +15,7 @@ const App = () => {
         <div className="pt-16">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/progressTracker" element={<ProgressTracker />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/goal/:goalId/:kanbanBoardId/:specificSteps/:measureProgress/:isGoalRealistic/:dueDate/:completedDate" element={<GoalPage />} />
           </Routes>

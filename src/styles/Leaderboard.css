@@ -1,0 +1,55 @@
+.leaderboard-container {
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  margin-top: 100px; /* ✅ Pushes everything down below the navbar */
+}
+
+.user-level {
+  background: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 80px; /* ✅ Pushes "Your Level" further down */
+}
+
+.leaderboard {
+  background: #333;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.leaderboard-title {
+  background: #6a7cf7;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+/* 🏆 Rank Colors */
+.gold { background: gold; color: black; }
+.silver { background: silver; color: black; }
+.bronze { background: #8B572A; color: black; }
+.blue { background: #6a7cf7; color: black; }

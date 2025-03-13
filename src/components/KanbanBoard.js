@@ -12,7 +12,7 @@ const KanbanBoard = ({ kanbanData }) => {
     done: []
   });
 
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false); // ✅ Track Task Form Visibility
 
   useEffect(() => {
     if (kanbanData) {
@@ -35,47 +35,20 @@ const KanbanBoard = ({ kanbanData }) => {
         done: response.data.done || [],
       });
     } catch (error) {
-      console.error("Failed to refresh tasks", error);
+      console.error("❌ Failed to refresh tasks", error);
     }
   };
 
-  // ✅ Drag & Drop logic: Move tasks between columns
-  const onDragEnd = async (result) => {
-    if (!result.destination) return;
-
-    const sourceCol = result.source.droppableId;
-    const destCol = result.destination.droppableId;
-    const taskIndex = result.source.index;
-
-    const updatedTasks = { ...tasks };
-
-    // Remove task from source column
-    const [movedTask] = updatedTasks[sourceCol].splice(taskIndex, 1);
-    updatedTasks[destCol].splice(result.destination.index, 0, movedTask);
-
-    setTasks({ ...updatedTasks });
-
-    const newStatus = destCol.toUpperCase(); // "todo" -> "TODO", "inprogress" -> "INPROGRESS", "done" -> "DONE"
-
-    try {
-      await axios.post(
-        `http://localhost:8080/task/change-status/${movedTask.id}`,
-        { newStatus },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(`✅ Task ${movedTask.id} moved to ${newStatus}`);
-    } catch (error) {
-      console.error(`❌ Failed to update task status for ${movedTask.id}`, error);
-    }
+  // ✅ Ensure this function properly updates the state
+  const handleOpenForm = () => {
+    console.log("Opening Task Form...");
+    setShowForm(true);
   };
 
   return (
     <div>
       {kanbanData.name}
-      <DragDropContext onDragEnd={onDragEnd}> {/* ✅ Fix: Add onDragEnd */}
+      <DragDropContext>
         <div className="kanban-container">
           {Object.entries(tasks).map(([columnId, columnTasks]) => (
             <Droppable key={columnId} droppableId={columnId}>
@@ -87,7 +60,9 @@ const KanbanBoard = ({ kanbanData }) => {
                   ))}
 
                   {columnId === "todo" && (
-                    <button className="add-task-btn" onClick={() => setShowForm(true)}>➕ Add Task</button>
+                    <button className="add-task-btn" onClick={handleOpenForm}>
+                      ➕ Add Task
+                    </button>
                   )}
 
                   {provided.placeholder}
@@ -98,7 +73,14 @@ const KanbanBoard = ({ kanbanData }) => {
         </div>
       </DragDropContext>
 
-      {showForm && <AddTaskForm kanbanBoardId={kanbanData.id} closeForm={() => setShowForm(false)} refreshTasks={refreshTasks} />}
+      {/* ✅ Add Task Form appears when showForm is true */}
+      {showForm && (
+        <AddTaskForm 
+          kanbanBoardId={kanbanData.id} 
+          closeForm={() => setShowForm(false)} 
+          refreshTasks={refreshTasks} 
+        />
+      )}
     </div>
   );
 };

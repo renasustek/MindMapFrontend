@@ -1,0 +1,56 @@
+.progress-tracker {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    margin-top: 120px; /* ✅ Ensures it is fully visible below the navbar */
+  }
+  
+  .input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* ✅ Spaces inputs and button properly */
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* ✅ Prevents overlap on smaller screens */
+  }
+  
+  .input-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-box label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input-box input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+    width: 120px;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  .chart-container {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  

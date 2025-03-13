@@ -11,14 +11,13 @@ const AuthModal = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset errors
+    setError(""); // Reset errors on new attempt
     if (isLogin) {
       await login(name, password, setError);
     } else {
       await register(name, password, setError);
     }
-
-    if (!error) closeModal(); // Close modal after successful login/register
+    if (!error) closeModal();
   };
 
   return (
@@ -53,7 +52,9 @@ const AuthModal = ({ closeModal }) => {
           </button>
         </p>
 
-        <button className="close-btn" onClick={closeModal}>Close</button>
+        <button className="close-btn" onClick={closeModal}>
+          Close
+        </button>
       </div>
     </div>
   );
