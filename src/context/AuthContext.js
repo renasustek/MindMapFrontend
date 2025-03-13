@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Logout failed", error);
     }
+    window.location.reload(); 
   };
 
   return (

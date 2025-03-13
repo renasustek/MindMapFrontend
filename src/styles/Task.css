@@ -1,0 +1,53 @@
+.kanban-task {
+    position: relative;
+    background: white;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .task-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .task-desc {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .task-info p {
+    font-size: 12px;
+    margin: 2px 0;
+  }
+  
+  .task-icons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .icon {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .delete-icon {
+    color: red;
+  }
+  
+  .edit-icon {
+    color: blue;
+  }
+  

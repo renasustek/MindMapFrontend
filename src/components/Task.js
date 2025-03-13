@@ -1,5 +1,4 @@
 import React from "react";
-import { Draggable } from "@hello-pangea/dnd";
 
 // Function to determine task color based on EisenhowerMatrix
 const getTaskColor = (matrix) => {
@@ -17,15 +16,10 @@ const getTaskColor = (matrix) => {
   }
 };
 
-const Task = ({ task, index }) => {
+const Task = ({task}) => {
   return (
-    <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-      {(provided) => (
         <div
           className="kanban-task"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           style={{ backgroundColor: getTaskColor(task.eisenhowerMatrix) }}
         >
           <p className="task-title">{task.name}</p>
@@ -36,8 +30,7 @@ const Task = ({ task, index }) => {
             {task.completedDate && <p><strong>Completed:</strong> {task.completedDate}</p>}
           </div>
         </div>
-      )}
-    </Draggable>
+     
   );
 };
 

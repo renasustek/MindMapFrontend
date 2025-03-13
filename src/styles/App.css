@@ -1,0 +1,10 @@
+/* Ensure body content starts below the fixed navbar */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Push all content below the navbar */
+.main-content {
+    padding-top: 70px; /* Adjust based on your navbar height */
+}
