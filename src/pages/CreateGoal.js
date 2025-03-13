@@ -56,7 +56,10 @@ const CreateGoal = () => {
                     <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
 
                     <div className="button-group">
-                        <button type="submit">Submit</button>
+                        <Link to="/">
+                            <button type="submit">Submit</button>
+                        </Link>
+
                         <Link to="/">
                             <button type="button">Cancel</button>
                         </Link>

@@ -1,71 +1,122 @@
+/* 🔲 Modal Overlay */
 .auth-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .auth-modal {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 350px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .auth-modal h2 {
-    margin-bottom: 10px;
-  }
-  
-  .auth-modal input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .auth-modal button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .auth-modal button:hover {
-    background: #0056b3;
-  }
-  
-  .switch-btn {
-    background: none;
-    color: #007bff;
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  .close-btn {
-    background: red;
-    color: white;
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .error-message {
-    color: red;
-    margin-bottom: 10px;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* ✅ Darkened background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 🔳 Modal Box */
+.auth-modal {
+  background: #1e1e1e; /* ✅ Dark theme */
+  padding: 25px;
+  border-radius: 10px;
+  width: 380px;
+  text-align: center;
+  box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
+  color: white;
+}
+
+/* 🔤 Modal Header */
+.auth-modal h2 {
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #00c6ff;
+}
+
+/* ✨ Input Fields */
+.auth-modal input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 6px;
+  background: #2c2c2c;
+  color: white;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+  outline: none;
+}
+
+.auth-modal input:focus {
+  box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
+}
+
+/* 🔘 Buttons */
+.auth-modal button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: 0.3s ease-in-out;
+}
+
+/* 🟢 Login/Register Button */
+.auth-modal button[type="submit"] {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  box-shadow: 0px 0px 12px rgba(0, 255, 204, 0.6);
+}
+
+.auth-modal button[type="submit"]:hover {
+  background: linear-gradient(90deg, #0072ff, #00c6ff);
+  box-shadow: 0px 0px 18px rgba(0, 255, 204, 1);
+}
+
+/* 🔄 Switch Login/Register */
+.switch-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #d1d1d1;
+}
+
+/* 🔵 Switch Button */
+.switch-btn {
+  background: none;
+  color: #00c6ff;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+.switch-btn:hover {
+  color: #00ffcc;
+  text-shadow: 0px 0px 8px rgba(0, 255, 204, 0.8);
+}
+
+/* ❌ Close Button */
+.close-btn {
+  background: red;
+  margin-top: 15px;
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+  background: darkred;
+  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.8);
+}
+
+/* 🔴 Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}

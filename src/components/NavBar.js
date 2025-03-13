@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes, FaChartLine, FaBook, FaPlus, FaUser, FaSignOutAlt, FaRobot, FaThLarge } from "react-icons/fa"; 
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
-import AuthModal from "./AuthModal";
-import axios from "axios"; 
+import AuthModal from "./AuthModal"; // ✅ Import Auth Modal
+import axios from "axios";
 import "../styles/NavBar.css";
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [goals, setGoals] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch goals when user logs in
+  // Fetch Goals
   useEffect(() => {
     if (isAuthenticated) {
       axios
         .get("http://localhost:8080/goal/all", { withCredentials: true })
         .then((response) => {
           setGoals(response.data || []);
-          localStorage.setItem("goals", JSON.stringify(response.data || []));
         })
         .catch((error) => {
           console.error("Failed to fetch goals", error);
@@ -30,14 +29,6 @@ const NavBar = () => {
     }
   }, [isAuthenticated]);
 
-  // Restore goals from localStorage on page load
-  useEffect(() => {
-    const savedGoals = localStorage.getItem("goals");
-    if (savedGoals) {
-      setGoals(JSON.parse(savedGoals));
-    }
-  }, []);
-
   const handleGoalClick = (goal) => {
     navigate(`/goal/${goal.uuid}/${goal.kanbanBoardId}/${goal.specificSteps}/${goal.measureProgress}/${goal.isGoalRealistic}/${goal.dueDate}/${goal.completedDate}`);
   };
@@ -45,94 +36,87 @@ const NavBar = () => {
   return (
     <>
       <nav className="navbar">
-        {/* Left Section: Logo + Navigation Links */}
+        {/* Left Section */}
         <div className="nav-left">
           <div className="logo"></div>
           <h1>MindMap</h1>
+        </div>
 
-          <div className="nav-links">
-            <Link to="/progressTracker"><FaChartLine /></Link>
-            <Link to="/leaderboard"><FaBook /></Link>
-            <Link to="/chatbot"><FaRobot title="Chatbot" /></Link>
-            <Link to="/PriorityTasks"><FaThLarge title="PriorityTasks" /></Link>
+        {/* User Section */}
+        <div className="user-section">
+          <FaUser onClick={() => setShowModal(true)} title="Login/Register" />
+          {isAuthenticated && (
+            <FaSignOutAlt onClick={() => logout()} className="cursor-pointer" title="Logout" />
+          )}
+        </div>
 
-            <div className="goal-buttons">
-              {goals.length > 0 ? (
-                goals.map((goal) => (
-                  <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
-                    GOAL
-                  </button>
-                ))
-              ) : (
-                <p>No Goals Available</p>
+        {/* Navigation Links */}
+        <div className="nav-links">
+          <Link to="/progressTracker">Progress Tracker</Link>
+          <Link to="/leaderboard">Leaderboard</Link>
+          <Link to="/chatbot">Chatbot</Link>
+          <Link to="/PriorityTasks">Priority Tasks</Link>
+          <Link to="/CreateGoal">Create Goal</Link>
+
+          {/* 🎯 Goals Dropdown */}
+          {isAuthenticated && (
+            <div className="goal-dropdown">
+              <button className="goal-dropdown-btn" onClick={() => setGoalDropdownOpen(!goalDropdownOpen)}>
+                Goals <FaChevronDown />
+              </button>
+              {goalDropdownOpen && (
+                <div className="goal-dropdown-content">
+                  {goals.length > 0 ? (
+                    goals.map((goal) => (
+                      <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
+                        {goal.name || "Goal"}
+                      </button>
+                    ))
+                  ) : (
+                    <p className="no-goals">No Goals Available</p>
+                  )}
+                </div>
               )}
             </div>
-
-            <Link to="/CreateGoal"><FaPlus title="CreateGoal" /></Link>
-          </div>
+          )}
         </div>
 
-        {/* Right Section: Login & Logout */}
-        <div className="user-section">
-          <FaUser onClick={() => setShowModal(true)} className="cursor-pointer" title="Login/Register" />
-          <FaSignOutAlt
-            onClick={() => {
-              logout();
-              setGoals([]);
-              localStorage.removeItem("goals");
-            }}
-            className="cursor-pointer"
-            title="Logout"
-          />
-        </div>
-
-        {/* Hamburger Menu (Mobile) */}
+        {/* Mobile Menu Icon */}
         <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FaTimes /> : <FaBars />}
         </div>
-
-        {/* Mobile Navigation Menu */}
-        {menuOpen && (
-          <div className="mobile-menu">
-            <div className="mobile-menu-content">
-            <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </div>
-              <Link to="/progressTracker" onClick={() => setMenuOpen(false)}>Progress Tracker</Link>
-              <Link to="/leaderboard" onClick={() => setMenuOpen(false)}>Leaderboard</Link>
-              <Link to="/chatbot" onClick={() => setMenuOpen(false)}>Chatbot</Link>
-              <Link to="/PriorityTasks" onClick={() => setMenuOpen(false)}>Priority Tasks</Link>
-              <Link to="/CreateGoal" onClick={() => setMenuOpen(false)}>Create Goal</Link>
-              <div className="goal-buttons">
-              {goals.length > 0 ? (
-                goals.map((goal) => (
-                  <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
-                    GOAL
-                  </button>
-                ))
-              ) : (
-                <p>No Goals Available</p>
-              )}
-            </div>
-              {/* User Section inside Mobile Menu */}
-              <div className="mobile-user-section">
-                <FaUser onClick={() => { setShowModal(true); setMenuOpen(false); }} className="cursor-pointer" title="Login/Register" />
-                <FaSignOutAlt
-                  onClick={() => {
-                    logout();
-                    setGoals([]);
-                    localStorage.removeItem("goals");
-                    setMenuOpen(false);
-                  }}
-                  className="cursor-pointer"
-                  title="Logout"
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </nav>
 
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          <Link to="/progressTracker" onClick={() => setMenuOpen(false)}>Progress Tracker</Link>
+          <Link to="/leaderboard" onClick={() => setMenuOpen(false)}>Leaderboard</Link>
+          <Link to="/chatbot" onClick={() => setMenuOpen(false)}>Chatbot</Link>
+          <Link to="/PriorityTasks" onClick={() => setMenuOpen(false)}>Priority Tasks</Link>
+          <Link to="/CreateGoal" onClick={() => setMenuOpen(false)}>Create Goal</Link>
+
+          {/* 🎯 Mobile Goals Dropdown */}
+          {isAuthenticated && (
+            <div className="mobile-goal-dropdown">
+              <button className="goal-dropdown-btn" onClick={() => setGoalDropdownOpen(!goalDropdownOpen)}>
+                Goals <FaChevronDown />
+              </button>
+              {goalDropdownOpen && (
+                <div className="goal-dropdown-content">
+                  {goals.map((goal) => (
+                    <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
+                      {goal.name || "Goal"}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ✅ Auth Modal */}
       {showModal && <AuthModal closeModal={() => setShowModal(false)} />}
     </>
   );

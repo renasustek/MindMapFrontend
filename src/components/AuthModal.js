@@ -45,16 +45,15 @@ const AuthModal = ({ closeModal }) => {
           <button type="submit">{isLogin ? "Login" : "Register"}</button>
         </form>
 
-        <p>
+        <p className="switch-text">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <button className="switch-btn" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? "Register" : "Login"}
           </button>
+          <button className="close-btn" onClick={closeModal}>Close</button>
+
         </p>
 
-        <button className="close-btn" onClick={closeModal}>
-          Close
-        </button>
       </div>
     </div>
   );

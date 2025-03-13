@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/PriorityTasks.css"; // Add styles if needed
+import "../styles/PriorityTasks.css"; 
 
 const PriorityTasks = () => {
   const [tasks, setTasks] = useState([]);
