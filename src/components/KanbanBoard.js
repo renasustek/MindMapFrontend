@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
 import Task from "./Task";
 import AddTaskForm from "./AddTaskForm";
@@ -12,7 +12,7 @@ const KanbanBoard = ({ kanbanData }) => {
     done: []
   });
 
-  const [showForm, setShowForm] = useState(false); // ✅ Track Task Form Visibility
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (kanbanData) {
@@ -39,33 +39,71 @@ const KanbanBoard = ({ kanbanData }) => {
     }
   };
 
-  // ✅ Ensure this function properly updates the state
-  const handleOpenForm = () => {
-    console.log("Opening Task Form...");
-    setShowForm(true);
+  // ✅ Drag and Drop Handler
+  const onDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const sourceCol = result.source.droppableId;
+    const destCol = result.destination.droppableId;
+    const taskIndex = result.source.index;
+
+    const updatedTasks = { ...tasks };
+
+    // Remove task from source column
+    const [movedTask] = updatedTasks[sourceCol].splice(taskIndex, 1);
+    updatedTasks[destCol].splice(result.destination.index, 0, movedTask);
+
+    setTasks({ ...updatedTasks });
+
+    const newStatus = destCol.toUpperCase(); // Convert column to API format
+
+    try {
+      await axios.post(
+        `http://localhost:8080/task/change-status/${movedTask.id}`,
+        { newStatus },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(`✅ Task ${movedTask.id} moved to ${newStatus}`);
+    } catch (error) {
+      console.error(`❌ Failed to update task status for ${movedTask.id}`, error);
+    }
   };
 
   return (
     <div>
       {kanbanData.name}
-      <DragDropContext>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div className="kanban-container">
           {Object.entries(tasks).map(([columnId, columnTasks]) => (
             <Droppable key={columnId} droppableId={columnId}>
               {(provided) => (
                 <div className="kanban-column" ref={provided.innerRef} {...provided.droppableProps}>
                   <h2>{columnId.toUpperCase()}</h2>
+
                   {columnTasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} />
+                    <Draggable key={task.id} draggableId={task.id} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <Task task={task} />
+                        </div>
+                      )}
+                    </Draggable>
                   ))}
 
+                  {provided.placeholder}
+
                   {columnId === "todo" && (
-                    <button className="add-task-btn" onClick={handleOpenForm}>
+                    <button className="add-task-btn" onClick={() => setShowForm(true)}>
                       ➕ Add Task
                     </button>
                   )}
-
-                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
@@ -73,7 +111,6 @@ const KanbanBoard = ({ kanbanData }) => {
         </div>
       </DragDropContext>
 
-      {/* ✅ Add Task Form appears when showForm is true */}
       {showForm && (
         <AddTaskForm 
           kanbanBoardId={kanbanData.id} 

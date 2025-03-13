@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AddLabelForm from "./AddLabelForm";
 import "../styles/LabelDropdown.css";
 
-const LabelDropdown = ({ selectedLabelId, onLabelChange }) => {
+const LabelDropdown = ({ selectedLabel, setSelectedLabel }) => {
   const [labels, setLabels] = useState([]);
   const [showAddLabel, setShowAddLabel] = useState(false);
-  
   // Fetch all labels from the backend
   const fetchLabels = async () => {
     try {
@@ -18,42 +16,33 @@ const LabelDropdown = ({ selectedLabelId, onLabelChange }) => {
       console.error("❌ Failed to fetch labels:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchLabels();
   }, []);
-  
+
   const handleLabelChange = (e) => {
-    if (e.target.value === "add-new") {
+    const selectedUuid = e.target.value;
+    
+    if (selectedUuid === "add-new") {
       setShowAddLabel(true);
     } else {
-      onLabelChange(e.target.value);
+      const selectedLabelObj = labels.find(label => label.uuid === selectedUuid);
+      setSelectedLabel(selectedLabelObj || null); // ✅ Store the whole object
     }
   };
-  
+
   return (
     <div className="label-dropdown">
-      <select 
-        value={selectedLabelId || ""} 
-        onChange={handleLabelChange}
-      >
-        <option key="default-option" value="">Select Label...</option>
+      <select value={selectedLabel ? selectedLabel.uuid : ""} onChange={handleLabelChange}>
+        <option value="">Select Label...</option> {/* ✅ Default option */}
         {labels.map((label) => (
-          <option key={label.id || `label-${label.name}`} value={label.id}>
-            {label.name}
+          <option key={label.uuid} value={label.uuid}>
+            {label.name} {/* ✅ Show name but store full object */}
           </option>
         ))}
-        <option key="add-new" value="add-new" className="add-label-option">
-          ➕ Add New Label
-        </option>
+        <option key="add-new" value="add-new" className="add-label-option">➕ Add New Label</option>
       </select>
-      
-      {showAddLabel && (
-        <AddLabelForm 
-          closeForm={() => setShowAddLabel(false)} 
-          refreshLabels={fetchLabels} 
-        />
-      )}
     </div>
   );
 };

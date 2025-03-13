@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaChartLine, FaBook, FaPlus, FaRedo, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaChartLine, FaBook, FaPlus, FaRedo, FaUser, FaSignOutAlt, FaRobot, FaThLarge } from "react-icons/fa"; // ✅ Import Chatbot & Kanban Icons
 import { AuthContext } from "../context/AuthContext";
 import AuthModal from "./AuthModal";
 import axios from "axios"; 
@@ -53,23 +53,34 @@ const NavBar = () => {
         <div className="nav-links">
           <Link to="/progressTracker"><FaChartLine /></Link>
           <Link to="/leaderboard"><FaBook /></Link>
+
+          {/* ✅ Chatbot Button */}
+          <Link to="/chatbot">
+            <FaRobot title="Chatbot" />
+          </Link>
+
+          {/* ✅ Main Kanban Board Button */}
+          <Link to="/PriorityTasks">
+            <FaThLarge title="PriorityTasks" />
+          </Link>
+
+          {/* ✅ Goals */}
           <div className="goal-buttons">
-          {goals.length > 0 ? (
-            goals.map((goal) => (
-              <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
-                GOAL
-              </button>
-            ))
-          ) : (
-            <p>No Goals Available</p>
-          )}
-        </div>
+            {goals.length > 0 ? (
+              goals.map((goal) => (
+                <button key={goal.uuid} onClick={() => handleGoalClick(goal)} className="goal-btn">
+                  GOAL
+                </button>
+              ))
+            ) : (
+              <p>No Goals Available</p>
+            )}
+          </div>
 
           <FaPlus />
         </div>
 
-        {/* Goal Buttons */}
-        
+        {/* ✅ User Section */}
         <div className="user-section">
           <FaUser onClick={() => setShowModal(true)} className="cursor-pointer" title="Login/Register" />
           <FaSignOutAlt
