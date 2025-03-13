@@ -35,12 +35,12 @@ const Leaderboard = () => {
     fetchLeaderboard();
   }, []);
 
-  // Function to get background color based on ranking position
+  // Function to get rank colors & badges
   const getRankColor = (index) => {
-    if (index === 0) return "gold"; // 🥇 First place
-    if (index === 1) return "silver"; // 🥈 Second place
-    if (index === 2) return "bronze"; // 🥉 Third place
-    return "blue"; // 🔵 Other positions
+    if (index === 0) return { className: "gold", badge: "🥇" }; // First place
+    if (index === 1) return { className: "silver", badge: "🥈" }; // Second place
+    if (index === 2) return { className: "bronze", badge: "🥉" }; // Third place
+    return { className: "blue", badge: index + 1 }; // Other rankings
   };
 
   return (
@@ -62,13 +62,17 @@ const Leaderboard = () => {
         </div>
 
         {/* Leaderboard Entries */}
-        {leaderboard.map((player, index) => (
-          <div key={index} className={`leaderboard-row ${getRankColor(index)}`}>
-            <div>{index + 1}</div>
-            <div>{player.username}</div>
-            <div>{player.xp}</div>
-          </div>
-        ))}
+        {leaderboard.map((player, index) => {
+          const { className, badge } = getRankColor(index);
+
+          return (
+            <div key={index} className={`leaderboard-row ${className}`}>
+              <div>{badge}</div>
+              <div>{player.username}</div>
+              <div>{player.xp}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

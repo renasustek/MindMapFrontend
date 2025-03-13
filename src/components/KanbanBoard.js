@@ -83,7 +83,6 @@ const KanbanBoard = ({ kanbanData }) => {
 
   return (
     <div className="kanban-board">
-      <h1>{kanbanData?.name || "My Kanban Board"}</h1>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="kanban-container">

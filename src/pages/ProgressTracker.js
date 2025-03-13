@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import "../styles/ProgressTracker.css"; // Updated CSS
 
 const ProgressTracker = () => {
   const [data, setData] = useState([]);
-  const [interval, setInterval] = useState(7); // Default Interval
-  const [timeframe, setTimeframe] = useState(80); // Default Timeframe
+  const [interval, setInterval] = useState(7);
+  const [timeframe, setTimeframe] = useState(80);
 
-  // Function to fetch data based on user inputs
+  // Fetch progress data
   const fetchProcrastinationData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/procrastinationLevel?intervalDays=${interval}&timeframeDays=${timeframe}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `http://localhost:8080/procrastinationLevel?intervalDays=${interval}&timeframeDays=${timeframe}`,
+        { withCredentials: true }
+      );
 
-      // ✅ Format data correctly for recharts
       const formattedData = response.data.map((entry) => ({
-        date: entry.endDate, // ✅ X-Axis Label
-        procrastinationScore: entry.procrastinationScore, // ✅ Y-Axis Value
+        date: entry.endDate,
+        procrastinationScore: entry.procrastinationScore,
       }));
 
       setData(formattedData);
@@ -26,36 +27,33 @@ const ProgressTracker = () => {
     }
   };
 
-  // Fetch data on initial load
   useEffect(() => {
     fetchProcrastinationData();
   }, []);
 
-  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // ✅ Prevents page reload
+    e.preventDefault();
     fetchProcrastinationData();
   };
 
   return (
     <div className="progress-tracker">
-      <h2 className="text-center text-2xl font-bold mb-6">Procrastination Progress Tracker</h2>
+      <h2 className="tracker-title">📊 Procrastination Progress Tracker</h2>
 
-      {/* ✅ Interval & Timeframe Inputs - Now Fully Visible */}
-      
-
-      {/* ✅ Line Chart */}
+      {/* Chart Section */}
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" angle={-45} textAnchor="end" interval={0} />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="procrastinationScore" stroke="#82ca9d" strokeWidth={2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+            <XAxis dataKey="date" angle={-45} textAnchor="end" interval={0} stroke="#bbb" />
+            <YAxis stroke="#bbb" />
+            <Tooltip contentStyle={{ backgroundColor: "#222", borderRadius: "8px", color: "white" }} />
+            <Line type="monotone" dataKey="procrastinationScore" stroke="#00ff99" strokeWidth={3} dot={{ fill: "#00ff99", r: 4 }} />
           </LineChart>
         </ResponsiveContainer>
       </div>
+
+      {/* Form Section */}
       <form className="input-container" onSubmit={handleSubmit}>
         <div className="input-box">
           <label htmlFor="interval">Interval (Days):</label>
@@ -81,7 +79,7 @@ const ProgressTracker = () => {
           />
         </div>
 
-        <button type="submit" className="submit-button">Submit</button>
+        <button type="submit" className="submit-button">Update</button>
       </form>
     </div>
   );

@@ -2,6 +2,9 @@
 body, html {
     margin: 0;
     padding: 0;
+    background-color: #1e1e1e; /* Replace this with the exact color */
+    color: white; /* Ensures readability */
+    font-family: Arial, sans-serif;
 }
 
 /* Push all content below the navbar */

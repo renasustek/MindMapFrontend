@@ -1,55 +1,108 @@
+/* 🎮 Leaderboard - Modern UI with Glassmorphism & Neon Glow */
+body {
+  background-color: #181818; /* Deep dark background */
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🏆 Leaderboard Container */
 .leaderboard-container {
-  width: 50%;
+  width: 80%;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
   text-align: center;
-  margin-top: 100px; /* ✅ Pushes everything down below the navbar */
+  margin-top: 80px;
 }
 
+/* 🎖 User Level Box */
 .user-level {
-  background: #222;
-  color: white;
+  background: rgba(255, 255, 255, 0.1); /* Transparent effect */
+  color: #00ffcc;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  margin-top: 80px; /* ✅ Pushes "Your Level" further down */
-}
-
-.leaderboard {
-  background: #333;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.leaderboard-title {
-  background: #6a7cf7;
-  color: black;
   font-size: 24px;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 4px 10px rgba(0, 255, 204, 0.3);
+}
+
+/* 🏆 Leaderboard Card */
+.leaderboard {
+  background: rgba(255, 255, 255, 0.08); /* Glass effect */
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 4px 15px rgba(0, 255, 204, 0.2);
+}
+
+/* 🏅 Leaderboard Title */
+.leaderboard-title {
+  background: linear-gradient(90deg, #00aaff, #00ffcc);
+  color: black;
+  font-size: 26px;
   font-weight: bold;
   padding: 10px;
   border-radius: 10px;
+  text-transform: uppercase;
 }
 
+/* 🏆 Header Row */
 .leaderboard-header {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 12px;
   font-weight: bold;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
+/* 🔥 Leaderboard Rows */
 .leaderboard-row {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 5px 0;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 6px 0;
   font-weight: bold;
+  transition: 0.3s ease-in-out;
 }
 
-/* 🏆 Rank Colors */
-.gold { background: gold; color: black; }
-.silver { background: silver; color: black; }
-.bronze { background: #8B572A; color: black; }
-.blue { background: #6a7cf7; color: black; }
+/* 🥇 Rank Colors */
+.gold {
+  background: linear-gradient(90deg, #ffcc00, #ffaa00);
+  color: black;
+}
+
+.silver {
+  background: linear-gradient(90deg, #cccccc, #b3b3b3);
+  color: black;
+}
+
+.bronze {
+  background: linear-gradient(90deg, #b87333, #964b00);
+  color: black;
+}
+
+/* 🔵 Default Ranks */
+.blue {
+  background: rgba(0, 170, 255, 0.4);
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.blue:hover {
+  background: rgba(0, 170, 255, 0.7);
+  transform: scale(1.02);
+}
+
+/* ✨ Smooth Animations */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(0, 255, 204, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 204, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(0, 255, 204, 0.3); }
+}
+
+.gold, .silver, .bronze {
+  animation: glow 2s infinite alternate;
+}

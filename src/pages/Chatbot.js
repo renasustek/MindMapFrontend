@@ -6,26 +6,24 @@ import "../styles/Chatbot.css";
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [selectedLabel, setSelectedLabel] = useState(null); // ✅ Store full label object
-  const [loading, setLoading] = useState(false); // Show loading indicator
+  const [selectedLabel, setSelectedLabel] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSendMessage = async () => {
-    if (!input.trim()) return; // Prevent empty messages
+    if (!input.trim()) return;
 
     const userMessage = { text: input, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
-    
-    setInput(""); // Clear input field
+
+    setInput("");
     setLoading(true);
 
-    // ✅ If no label is selected, send `null` for label
     const labelData = selectedLabel ? { uuid: selectedLabel.uuid, name: selectedLabel.name } : null;
 
-    
     try {
       const response = await axios.post("http://localhost:8080/api/chat", {
         fastApiRequest: { message: input },
-        label: labelData, // ✅ Use full label object
+        label: labelData,
       }, { withCredentials: true });
 
       const botMessage = { text: response.data.response, sender: "bot" };
@@ -39,6 +37,7 @@ const Chatbot = () => {
 
   return (
     <div className="chat-container">
+      {/* 📝 Chat Box */}
       <div className="chat-box">
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
@@ -48,6 +47,7 @@ const Chatbot = () => {
         {loading && <div className="chat-message bot">Typing...</div>}
       </div>
 
+      {/* ✍ Chat Input */}
       <div className="chat-input-container">
         <LabelDropdown selectedLabel={selectedLabel} setSelectedLabel={setSelectedLabel} />
         <input

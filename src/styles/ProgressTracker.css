@@ -1,56 +1,95 @@
+/* Main Tracker Container */
 .progress-tracker {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    margin-top: 120px; /* ✅ Ensures it is fully visible below the navbar */
-  }
-  
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  margin-top: 100px;
+  background: #222;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: white;
+}
+
+/* Title */
+.tracker-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Chart Container */
+.chart-container {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Input Form */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Input Box */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #bbb;
+}
+
+.input-box input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #333;
+  color: white;
+  text-align: center;
+  width: 120px;
+  transition: 0.3s ease-in-out;
+}
+
+.input-box input:focus {
+  border-color: #00ff99;
+  outline: none;
+  box-shadow: 0px 0px 8px rgba(0, 255, 153, 0.8);
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 10px 20px;
+  background: #00ff99;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background: #00cc77;
+  box-shadow: 0px 0px 8px rgba(0, 255, 153, 0.8);
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
   .input-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* ✅ Spaces inputs and button properly */
-    margin-bottom: 20px;
-    flex-wrap: wrap; /* ✅ Prevents overlap on smaller screens */
+      flex-direction: column;
   }
-  
-  .input-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .input-box label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
+
   .input-box input {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    text-align: center;
-    width: 120px;
+      width: 100%;
   }
-  
-  .submit-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 15px;
-  }
-  
-  .submit-button:hover {
-    background-color: #45a049;
-  }
-  
-  .chart-container {
-    background: #333;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
+}
