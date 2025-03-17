@@ -3,19 +3,18 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
 import Task from "./Task";
 import AddTaskForm from "./AddTaskForm";
+import confetti from "canvas-confetti"; // 🎉 Import Confetti
 import "../styles/KanbanBoard.css";
 
 const KanbanBoard = ({ kanbanData }) => {
-  // ✅ Ensure default empty board structure
   const [tasks, setTasks] = useState({
     todo: [],
     inprogress: [],
-    done: []
+    done: [],
   });
 
   const [showForm, setShowForm] = useState(false);
 
-  // ✅ Load tasks when `kanbanData` changes
   useEffect(() => {
     if (kanbanData) {
       setTasks({
@@ -26,7 +25,6 @@ const KanbanBoard = ({ kanbanData }) => {
     }
   }, [kanbanData]);
 
-  // ✅ Refresh tasks from backend
   const refreshTasks = async () => {
     if (!kanbanData?.id) return;
 
@@ -45,7 +43,16 @@ const KanbanBoard = ({ kanbanData }) => {
     }
   };
 
-  // ✅ Drag and Drop functionality
+  // 🎉 Confetti Function
+  const launchConfetti = () => {
+    confetti({
+      particleCount: 200,
+      spread: 70,
+      origin: { y: 0.6 }, // Lower the confetti burst
+    });
+  };
+
+  // ✅ Drag and Drop Functionality
   const onDragEnd = async (result) => {
     if (!result.destination) return;
 
@@ -57,16 +64,17 @@ const KanbanBoard = ({ kanbanData }) => {
     const sourceCol = source.droppableId;
     const destCol = destination.droppableId;
 
-    // Copy current tasks
     const updated = { ...tasks };
-    // Remove from source
     const [movedTask] = updated[sourceCol].splice(source.index, 1);
-    // Insert into destination
     updated[destCol].splice(destination.index, 0, movedTask);
 
     setTasks(updated);
 
-    // ✅ Update backend with new task status
+    // 🎉 If moved to "DONE," trigger confetti
+    if (destCol === "done") {
+      launchConfetti();
+    }
+
     try {
       const newStatus = destCol.toUpperCase();
       await axios.post(
@@ -77,33 +85,22 @@ const KanbanBoard = ({ kanbanData }) => {
       console.log(`✅ Moved task ${movedTask.id} to ${newStatus}`);
     } catch (error) {
       console.error(`❌ Failed to move task ${movedTask.id}`, error);
-      refreshTasks(); // Fallback if request fails
+      refreshTasks();
     }
   };
 
   return (
     <div className="kanban-board">
-
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="kanban-container">
           {["todo", "inprogress", "done"].map((colId) => (
             <Droppable key={colId} droppableId={colId}>
               {(provided) => (
-                <div
-                  className="kanban-column"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
+                <div className="kanban-column" ref={provided.innerRef} {...provided.droppableProps}>
                   <h2>{colId.toUpperCase()}</h2>
-
-                  {/* ✅ Show tasks if they exist, otherwise display placeholder */}
                   {tasks[colId].length > 0 ? (
                     tasks[colId].map((task, index) => (
-                      <Draggable
-                        key={String(task.id)}
-                        draggableId={String(task.id)}
-                        index={index}
-                      >
+                      <Draggable key={String(task.id)} draggableId={String(task.id)} index={index}>
                         {(provided) => (
                           <div
                             ref={provided.innerRef}
@@ -119,15 +116,9 @@ const KanbanBoard = ({ kanbanData }) => {
                   ) : (
                     <p className="empty-column">No tasks yet...</p>
                   )}
-
                   {provided.placeholder}
-
-                  {/* ✅ Only show "Add Task" in the To-Do column */}
                   {colId === "todo" && (
-                    <button
-                      className="add-task-btn"
-                      onClick={() => setShowForm(true)}
-                    >
+                    <button className="add-task-btn" onClick={() => setShowForm(true)}>
                       ➕ Add Task
                     </button>
                   )}
@@ -137,13 +128,8 @@ const KanbanBoard = ({ kanbanData }) => {
           ))}
         </div>
       </DragDropContext>
-
       {showForm && (
-        <AddTaskForm
-          kanbanBoardId={kanbanData?.id || ""}
-          closeForm={() => setShowForm(false)}
-          refreshTasks={refreshTasks}
-        />
+        <AddTaskForm kanbanBoardId={kanbanData?.id || ""} closeForm={() => setShowForm(false)} refreshTasks={refreshTasks} />
       )}
     </div>
   );

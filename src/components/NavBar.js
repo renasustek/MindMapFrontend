@@ -57,6 +57,7 @@ const NavBar = () => {
           <Link to="/chatbot">Chatbot</Link>
           <Link to="/PriorityTasks">Priority Tasks</Link>
           <Link to="/CreateGoal">Create Goal</Link>
+          <Link to="/LabelPage">Label Page</Link>
 
           {/* 🎯 Goals Dropdown */}
           {isAuthenticated && (

@@ -20,7 +20,7 @@ const CreateGoal = () => {
             isGoalRealistic,
             dueDate: dueDate ? new Date(dueDate).toISOString().split("T")[0] : null,
         };
-
+        console.log(requestData);
         try {
             await axios.post("http://localhost:8080/goal/create", requestData, {
                 headers: { "Content-Type": "application/json" },
@@ -36,7 +36,7 @@ const CreateGoal = () => {
         <div className="overlay">
             <div className="modal">
                 <h2>Create Goal</h2>
-                <form onSubmit={handleSubmit}>
+                <form>
                     <label>Name</label>
                     <input type="text" value={kanbanBoardName} onChange={(e) => setKanbanBoardName(e.target.value)} required />
 
@@ -57,7 +57,7 @@ const CreateGoal = () => {
 
                     <div className="button-group">
                         <Link to="/">
-                            <button type="submit">Submit</button>
+                            <button type="submit" onClick={handleSubmit}>Submit</button>
                         </Link>
 
                         <Link to="/">

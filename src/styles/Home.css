@@ -1,0 +1,133 @@
+/* Container */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  }
+  
+  /* Main Titles */
+  .main-title {
+    font-size: 2.8rem;
+    color: #a8ff60; /* Lime Green */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    color: #8fd75f; /* Softer Lime Green */
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Description Text */
+  .main-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #cccccc; /* Light Grey for better readability */
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Features Grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  /* Feature Cards */
+  .feature-card {
+    background: #222; /* Darker card background for contrast */
+    border: 1px solid #a8ff60; /* Lime Green Border */
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0px 4px 10px rgba(168, 255, 96, 0.2);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(168, 255, 96, 0.3);
+  }
+  
+  .feature-title {
+    font-size: 1.5rem;
+    color: #a8ff60; /* Lime Green */
+    margin-bottom: 0.5rem;
+  }
+  
+  .feature-text {
+    font-size: 1rem;
+    color: #dddddd; /* Light Grey for readability */
+    line-height: 1.6;
+  }
+  
+  /* Call-To-Action (CTA) Buttons */
+  .cta-container {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .cta-button {
+    background: #a8ff60; /* Lime Green */
+    color: black;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .cta-button:hover {
+    background: #90e053;
+    transform: scale(1.05);
+  }
+  
+  .cta-secondary {
+    background: none;
+    color: #a8ff60;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: 2px solid #a8ff60;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-secondary:hover {
+    background: #a8ff60;
+    color: black;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .main-title {
+      font-size: 2.2rem;
+    }
+  
+    .section-title {
+      font-size: 1.6rem;
+    }
+  
+    .main-description {
+      font-size: 1.1rem;
+    }
+  
+    .feature-title {
+      font-size: 1.3rem;
+    }
+  
+    .feature-text {
+      font-size: 0.95rem;
+    }
+  }
+  

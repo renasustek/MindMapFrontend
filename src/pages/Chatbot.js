@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { FaInfoCircle } from "react-icons/fa"; // ✅ Import info icon
 import LabelDropdown from "../components/LabelDropdown";
 import "../styles/Chatbot.css";
 
@@ -8,6 +9,7 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
   const [selectedLabel, setSelectedLabel] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showInfo, setShowInfo] = useState(false); // ✅ State for info modal
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -37,6 +39,9 @@ const Chatbot = () => {
 
   return (
     <div className="chat-container">
+      {/* ℹ️ Info Button */}
+      <FaInfoCircle className="info-icon" onClick={() => setShowInfo(true)} title="Information" />
+
       {/* 📝 Chat Box */}
       <div className="chat-box">
         {messages.map((msg, index) => (
@@ -59,6 +64,17 @@ const Chatbot = () => {
         />
         <button onClick={handleSendMessage} className="send-button">➤</button>
       </div>
+
+      {/* ℹ️ Information Modal */}
+      {showInfo && (
+        <div className="info-modal-overlay" onClick={() => setShowInfo(false)}>
+          <div className="info-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>Information</h2>
+            <p>This chatbot is only effective with cognitive restructuring questions.</p>
+            <button className="close-info-btn" onClick={() => setShowInfo(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

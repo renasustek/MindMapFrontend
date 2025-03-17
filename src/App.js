@@ -10,6 +10,7 @@ import PriorityTasks from "./pages/PriorityTasks"; // ✅ Import Main Kanban Boa
 import { AuthProvider } from "./context/AuthContext";
 import CreateGoal from "./pages/CreateGoal";
 import "./styles/App.css"
+import LabelsPage from "./pages/LabelPage";
 
 const App = () => {
   return (
@@ -24,8 +25,10 @@ const App = () => {
             <Route path="/chatbot" element={<Chatbot />} /> {/* ✅ New Chatbot Page */}
             <Route path="/PriorityTasks" element={<PriorityTasks />} /> {/* ✅ New Main Kanban Board */}
             <Route path="/CreateGoal" element={<CreateGoal />} /> {/* ✅ New Main Kanban Board */}
+            <Route path="/LabelPage" element={<LabelsPage />} /> {/* ✅ New Main Kanban Board */}
             <Route path="/goal/:goalId/:kanbanBoardId/:specificSteps/:measureProgress/:isGoalRealistic/:dueDate/:completedDate" element={<GoalPage />} />
           </Routes>
+          hello
         </div>
       </Router>
     </AuthProvider>

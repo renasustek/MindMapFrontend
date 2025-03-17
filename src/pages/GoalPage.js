@@ -19,7 +19,12 @@ const GoalPage = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Failed to fetch Kanban Board data", error);
+        if (error.response && error.response.status === 404) {
+          console.warn("Kanban Board not found (404). Setting data to null.");
+          setKanbanData(); // ✅ Set kanbanData to null if 404
+        } else {
+          console.error("Failed to fetch Kanban Board data", error);
+        }
         setLoading(false);
       });
   }, [kanbanBoardId]);

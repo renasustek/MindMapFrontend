@@ -34,7 +34,7 @@ const PriorityTasks = () => {
             </div>
           ))
         ) : (
-          <p className="no-tasks">No prioritized tasks available.</p>
+          <p className="no-tasks">No prioritised tasks available.</p>
         )}
       </div>
     </div>
